@@ -16,4 +16,16 @@ public class Scoreboard {
         return matches;
     }
 
+    public void updateScore(String home, String away, int homeScore, int awayScore) {
+        if(homeScore < 0 || awayScore < 0) {
+            throw new IllegalArgumentException("Scores cannot be negative");
+        }
+        for(Match match : matches) {
+            if(match.getHomeTeam().equals(home) && match.getAwayTeam().equals(away)) {
+                match.setHomeScore(homeScore);
+                match.setAwayScore(awayScore);
+                return;
+            }
+        }
+    }
 }
