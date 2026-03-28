@@ -1,6 +1,7 @@
 package com.scoreboard;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class Scoreboard {
@@ -13,6 +14,15 @@ public class Scoreboard {
     }
 
     public List<Match> getSummary() {
+        Comparator<Match> comparator = (m1, m2) -> {
+            int total1 = m1.getHomeScore() + m1.getAwayScore();
+            int total2 = m2.getHomeScore() + m2.getAwayScore();
+            if (total1 != total2) {
+                return Integer.compare(total2, total1); // total score
+            }
+            return m2.getStartTime().compareTo(m1.getStartTime()); // start time
+        };
+        matches.sort(comparator);
         return matches;
     }
 

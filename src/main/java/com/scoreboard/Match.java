@@ -47,4 +47,8 @@ public class Match {
     public void setAwayScore(int awayScore) {
         this.awayScore = awayScore;
     }
+
+    public Instant getStartTime() {
+        return startTime;
+    }
 }
