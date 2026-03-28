@@ -28,4 +28,11 @@ public class Scoreboard {
             }
         }
     }
+
+    public void finishMatch(String home, String away) {
+        boolean removed = matches.removeIf(match-> match.getHomeTeam().equals(home) && match.getAwayTeam().equals(away));
+        if(!removed) {
+            throw new IllegalArgumentException("Match not found: " + home + " vs " + away);
+        }
+    }
 }
