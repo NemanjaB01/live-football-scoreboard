@@ -33,4 +33,14 @@ public class ScoreboardTest {
         assertEquals(1, match.getHomeScore());
         assertEquals(0, match.getAwayScore());
     }
+
+    @Test
+    public void testFinishMatch_removesMatchFromScoreboard() {
+        Scoreboard scoreboard = new Scoreboard();
+        scoreboard.startMatch("Mexico", "Canada");
+        scoreboard.finishMatch("Mexico", "Canada");
+
+        List<Match> summary = scoreboard.getSummary();
+        assertEquals(0, summary.size());
+    }
 }
