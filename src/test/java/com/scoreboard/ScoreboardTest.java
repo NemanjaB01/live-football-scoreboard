@@ -67,4 +67,17 @@ public class ScoreboardTest {
         assertEquals("Argentina", summary.get(3).getHomeTeam());
         assertEquals("Germany", summary.get(4).getHomeTeam());
     }
+
+    @Test
+    public void testUpdateScore_nonExistentMatch_throwsException() {
+        Scoreboard scoreboard = new Scoreboard();
+        assertThrows(IllegalArgumentException.class, () -> scoreboard.updateScore("Mexico", "Canada", 1, 0));
+    }
+
+    @Test
+    public void testStartMatch_teamAlreadyPlaying_throwsException() {
+        Scoreboard scoreboard = new Scoreboard();
+        scoreboard.startMatch("Mexico", "Canada");
+        assertThrows(IllegalArgumentException.class, () -> scoreboard.startMatch("Mexico", "Brazil"));
+    }
 }
