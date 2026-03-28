@@ -21,14 +21,20 @@ This is a simple Java library for managing a live football scoreboard.
 - `Scoreboard`: Manages matches and provides operations.
 
 ## Data Structure
-- In-memory store: Currently `List<Match>` (will evolve to `TreeSet<Match>` with custom comparator for ordering when summary feature is implemented).
+- In-memory store: `List<Match>` with sorting performed on-demand in `getSummary()` using a comparator for total score descending, then start time descending.
 
 ## Validations
 - Team names: Non-null, non-empty.
 - Scores: Non-negative integers.
-- Matches: Unique team pairs; updating/finishing non-existent matches throws exceptions (to be implemented).
+- Matches: Unique team pairs; updating/finishing non-existent matches throws exceptions; teams cannot play in multiple matches simultaneously.
 
-
-## Notes
-- Data structure evolved from List to TreeSet for ordering.
-- TDD process followed with granular commits.
+## Usage
+```java
+Scoreboard scoreboard = new Scoreboard();
+scoreboard.startMatch("Mexico", "Canada");
+scoreboard.updateScore("Mexico", "Canada", 0, 5);
+scoreboard.startMatch("Spain", "Brazil");
+scoreboard.updateScore("Spain", "Brazil", 10, 2);
+List<Match> summary = scoreboard.getSummary(); // Returns matches ordered by total score descending
+scoreboard.finishMatch("Mexico", "Canada");
+```

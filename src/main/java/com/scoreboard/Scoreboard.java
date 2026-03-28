@@ -9,6 +9,12 @@ public class Scoreboard {
     private List<Match> matches = new ArrayList<>();
 
     public void startMatch(String home, String away) {
+        for(Match match : matches) {
+            if (match.getHomeTeam().equals(home) ||  match.getAwayTeam().equals(away)
+                || match.getHomeTeam().equals(away) || match.getAwayTeam().equals(home)) {
+                throw new IllegalArgumentException("Team " + home + " or " + away + " is already playing");
+            }
+        }
         Match match = new Match(home, away);
         matches.add(match);
     }
@@ -37,6 +43,7 @@ public class Scoreboard {
                 return;
             }
         }
+        throw new IllegalArgumentException("Match not found: " + home + " vs " + away);
     }
 
     public void finishMatch(String home, String away) {
