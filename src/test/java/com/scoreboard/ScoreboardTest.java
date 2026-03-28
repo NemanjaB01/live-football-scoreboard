@@ -1,0 +1,23 @@
+package com.scoreboard;
+
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+
+import java.util.List;
+
+public class ScoreboardTest {
+
+    @Test
+    public void testStartMatch_initialScoreZeroZero() {
+        Scoreboard scoreboard = new Scoreboard();
+        scoreboard.startMatch("Mexico", "Canada");
+
+        List<Match> summary = scoreboard.getSummary();
+        assertEquals(1, summary.size());
+        Match match = summary.get(0);
+        assertEquals("Mexico", match.getHomeTeam());
+        assertEquals("Canada", match.getAwayTeam());
+        assertEquals(0, match.getHomeScore());
+        assertEquals(0, match.getAwayScore());
+    }
+}
