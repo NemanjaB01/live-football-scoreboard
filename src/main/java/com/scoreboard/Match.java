@@ -14,11 +14,11 @@ public class Match {
     private Instant startTime;
 
     public Match(String homeTeam, String awayTeam) {
-        if(homeTeam == null || homeTeam.isEmpty() || awayTeam == null || awayTeam.isEmpty()) {
+        if(homeTeam == null || homeTeam.trim().isEmpty() || awayTeam == null || awayTeam.trim().isEmpty()) {
             throw new IllegalArgumentException("Team names cannot be null or empty");
         }
-        this.homeTeam = homeTeam;
-        this.awayTeam = awayTeam;
+        this.homeTeam = homeTeam.trim();
+        this.awayTeam = awayTeam.trim();
         homeScore = 0;
         awayScore = 0;
         startTime = Instant.now();

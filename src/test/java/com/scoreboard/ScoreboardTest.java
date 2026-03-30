@@ -80,4 +80,15 @@ public class ScoreboardTest {
         scoreboard.startMatch("Mexico", "Canada");
         assertThrows(IllegalArgumentException.class, () -> scoreboard.startMatch("Mexico", "Brazil"));
     }
+
+    @Test
+    public void testStartMatch_invalidTeamName_throwsException() {
+        Scoreboard scoreboard = new Scoreboard();
+        assertThrows(IllegalArgumentException.class, () -> scoreboard.startMatch(null, "Canada"));
+        assertThrows(IllegalArgumentException.class, () -> scoreboard.startMatch("Mexico", null));
+        assertThrows(IllegalArgumentException.class, () -> scoreboard.startMatch("", "Canada"));
+        assertThrows(IllegalArgumentException.class, () -> scoreboard.startMatch("Mexico", ""));
+        assertThrows(IllegalArgumentException.class, () -> scoreboard.startMatch("   ", "Canada"));
+        assertThrows(IllegalArgumentException.class, () -> scoreboard.startMatch("Mexico", "   "));
+    }
 }
