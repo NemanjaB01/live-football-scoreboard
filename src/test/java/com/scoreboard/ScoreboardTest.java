@@ -91,4 +91,12 @@ public class ScoreboardTest {
         assertThrows(IllegalArgumentException.class, () -> scoreboard.startMatch("   ", "Canada"));
         assertThrows(IllegalArgumentException.class, () -> scoreboard.startMatch("Mexico", "   "));
     }
+
+    @Test
+    public void testUpdateScore_negativeScores_throwsException() {
+        Scoreboard scoreboard = new Scoreboard();
+        scoreboard.startMatch("Mexico", "Canada");
+        assertThrows(IllegalArgumentException.class, () -> scoreboard.updateScore("Mexico", "Canada", -1, 0));
+        assertThrows(IllegalArgumentException.class, () -> scoreboard.updateScore("Mexico", "Canada", 0, -1));
+    }
 }
