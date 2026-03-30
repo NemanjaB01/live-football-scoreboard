@@ -19,7 +19,8 @@ public class Scoreboard {
         matches.add(match);
     }
 
-    public List<Match> getSummary() {
+    public List<MatchSummary> getSummary() {
+        List<Match> sortedMatches = new ArrayList<>(matches);
         Comparator<Match> comparator = (m1, m2) -> {
             int total1 = m1.getHomeScore() + m1.getAwayScore();
             int total2 = m2.getHomeScore() + m2.getAwayScore();
@@ -28,8 +29,10 @@ public class Scoreboard {
             }
             return m2.getStartTime().compareTo(m1.getStartTime()); // start time
         };
-        matches.sort(comparator);
-        return matches;
+        sortedMatches.sort(comparator);
+        return sortedMatches.stream()
+                .map(match -> new MatchSummary(match.getHomeTeam(), match.getAwayTeam(), match.getHomeScore(), match.getAwayScore(), match.getStartTime()))
+                .toList();
     }
 
     public void updateScore(String home, String away, int homeScore, int awayScore) {

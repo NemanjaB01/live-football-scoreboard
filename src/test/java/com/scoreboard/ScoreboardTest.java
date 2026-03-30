@@ -12,13 +12,13 @@ public class ScoreboardTest {
         Scoreboard scoreboard = new Scoreboard();
         scoreboard.startMatch("Mexico", "Canada");
 
-        List<Match> summary = scoreboard.getSummary();
+        List<MatchSummary> summary = scoreboard.getSummary();
         assertEquals(1, summary.size());
-        Match match = summary.get(0);
-        assertEquals("Mexico", match.getHomeTeam());
-        assertEquals("Canada", match.getAwayTeam());
-        assertEquals(0, match.getHomeScore());
-        assertEquals(0, match.getAwayScore());
+        MatchSummary match = summary.getFirst();
+        assertEquals("Mexico", match.homeTeam());
+        assertEquals("Canada", match.awayTeam());
+        assertEquals(0, match.homeScore());
+        assertEquals(0, match.awayScore());
     }
 
     @Test
@@ -27,11 +27,11 @@ public class ScoreboardTest {
         scoreboard.startMatch("Mexico", "Canada");
         scoreboard.updateScore("Mexico", "Canada", 1, 0);
 
-        List<Match> summary = scoreboard.getSummary();
+        List<MatchSummary> summary = scoreboard.getSummary();
         assertEquals(1, summary.size());
-        Match match = summary.get(0);
-        assertEquals(1, match.getHomeScore());
-        assertEquals(0, match.getAwayScore());
+        MatchSummary match = summary.get(0);
+        assertEquals(1, match.homeScore());
+        assertEquals(0, match.awayScore());
     }
 
     @Test
@@ -40,7 +40,7 @@ public class ScoreboardTest {
         scoreboard.startMatch("Mexico", "Canada");
         scoreboard.finishMatch("Mexico", "Canada");
 
-        List<Match> summary = scoreboard.getSummary();
+        List<MatchSummary> summary = scoreboard.getSummary();
         assertEquals(0, summary.size());
     }
 
@@ -58,14 +58,14 @@ public class ScoreboardTest {
         scoreboard.startMatch("Argentina", "Australia");
         scoreboard.updateScore("Argentina", "Australia", 3, 1);
 
-        List<Match> summary = scoreboard.getSummary();
+        List<MatchSummary> summary = scoreboard.getSummary();
         assertEquals(5, summary.size());
         // Expected order: Uruguay (12), Spain (12, but Uruguay more recent), Mexico (5), Argentina (4), Germany (4, but Argentina more recent)
-        assertEquals("Uruguay", summary.get(0).getHomeTeam());
-        assertEquals("Spain", summary.get(1).getHomeTeam());
-        assertEquals("Mexico", summary.get(2).getHomeTeam());
-        assertEquals("Argentina", summary.get(3).getHomeTeam());
-        assertEquals("Germany", summary.get(4).getHomeTeam());
+        assertEquals("Uruguay", summary.get(0).homeTeam());
+        assertEquals("Spain", summary.get(1).homeTeam());
+        assertEquals("Mexico", summary.get(2).homeTeam());
+        assertEquals("Argentina", summary.get(3).homeTeam());
+        assertEquals("Germany", summary.get(4).homeTeam());
     }
 
     @Test
