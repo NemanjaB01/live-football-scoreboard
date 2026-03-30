@@ -15,16 +15,19 @@ This is a simple Java library for managing a live football scoreboard.
 - Start time is recorded when the match is started.
 - The library uses in-memory storage with collections.
 - Ordering for summary: total score (home + away) descending, then start time descending (most recent first).
+- Team names are trimmed and cannot be null, empty, or whitespace-only.
+- getSummary returns a list of MatchSummary records, not mutable Match objects.
 
 ## Domain Entities
 - `Match`: Represents a match with home team, away team, scores, and start time.
 - `Scoreboard`: Manages matches and provides operations.
+- `MatchSummary`: Immutable record for summary data.
 
 ## Data Structure
-- In-memory store: `List<Match>` with sorting performed on-demand in `getSummary()` using a comparator for total score descending, then start time descending.
+- In-memory store: `List<Match>` with sorting performed on-demand in `getSummary()` using a comparator for total score descending, then start time descending. A copy is sorted to avoid side effects.
 
 ## Validations
-- Team names: Non-null, non-empty.
+- Team names: Non-null, non-empty after trimming.
 - Scores: Non-negative integers.
 - Matches: Unique team pairs; updating/finishing non-existent matches throws exceptions; teams cannot play in multiple matches simultaneously.
 
@@ -35,6 +38,6 @@ scoreboard.startMatch("Mexico", "Canada");
 scoreboard.updateScore("Mexico", "Canada", 0, 5);
 scoreboard.startMatch("Spain", "Brazil");
 scoreboard.updateScore("Spain", "Brazil", 10, 2);
-List<Match> summary = scoreboard.getSummary(); // Returns matches ordered by total score descending
+List<MatchSummary> summary = scoreboard.getSummary(); // Returns matches ordered by total score descending
 scoreboard.finishMatch("Mexico", "Canada");
 ```
