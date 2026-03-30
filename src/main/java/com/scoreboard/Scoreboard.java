@@ -9,9 +9,14 @@ public class Scoreboard {
     private List<Match> matches = new ArrayList<>();
 
     public void startMatch(String home, String away) {
+        if(home == null || away == null) {
+            throw new IllegalArgumentException("Team names cannot be null");
+        }
+        String trimmedHome = home.trim();
+        String trimmedAway = away.trim();
         for(Match match : matches) {
-            if (match.getHomeTeam().equals(home) ||  match.getAwayTeam().equals(away)
-                || match.getHomeTeam().equals(away) || match.getAwayTeam().equals(home)) {
+            if (match.getHomeTeam().equals(trimmedHome) ||  match.getAwayTeam().equals(trimmedAway)
+                || match.getHomeTeam().equals(trimmedAway) || match.getAwayTeam().equals(trimmedHome)) {
                 throw new IllegalArgumentException("Team " + home + " or " + away + " is already playing");
             }
         }
@@ -36,11 +41,16 @@ public class Scoreboard {
     }
 
     public void updateScore(String home, String away, int homeScore, int awayScore) {
+        if(home == null || away == null) {
+            throw new IllegalArgumentException("Team names cannot be null");
+        }
         if(homeScore < 0 || awayScore < 0) {
             throw new IllegalArgumentException("Scores cannot be negative");
         }
+        String trimmedHome = home.trim();
+        String trimmedAway = away.trim();
         for(Match match : matches) {
-            if(match.getHomeTeam().equals(home) && match.getAwayTeam().equals(away)) {
+            if(match.getHomeTeam().equals(trimmedHome) && match.getAwayTeam().equals(trimmedAway)) {
                 match.setHomeScore(homeScore);
                 match.setAwayScore(awayScore);
                 return;
@@ -50,7 +60,12 @@ public class Scoreboard {
     }
 
     public void finishMatch(String home, String away) {
-        boolean removed = matches.removeIf(match-> match.getHomeTeam().equals(home) && match.getAwayTeam().equals(away));
+        if(home == null || away == null) {
+            throw new IllegalArgumentException("Team names cannot be null");
+        }
+        String trimmedHome = home.trim();
+        String trimmedAway = away.trim();
+        boolean removed = matches.removeIf(match-> match.getHomeTeam().equals(trimmedHome) && match.getAwayTeam().equals(trimmedAway));
         if(!removed) {
             throw new IllegalArgumentException("Match not found: " + home + " vs " + away);
         }

@@ -17,6 +17,9 @@ public class Match {
         if(homeTeam == null || homeTeam.trim().isEmpty() || awayTeam == null || awayTeam.trim().isEmpty()) {
             throw new IllegalArgumentException("Team names cannot be null or empty");
         }
+        if(homeTeam.trim().equals(awayTeam.trim())) {
+            throw new IllegalArgumentException("Home and away teams cannot be the same");
+        }
         this.homeTeam = homeTeam.trim();
         this.awayTeam = awayTeam.trim();
         homeScore = 0;
