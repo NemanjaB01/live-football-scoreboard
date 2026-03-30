@@ -99,4 +99,25 @@ public class ScoreboardTest {
         assertThrows(IllegalArgumentException.class, () -> scoreboard.updateScore("Mexico", "Canada", -1, 0));
         assertThrows(IllegalArgumentException.class, () -> scoreboard.updateScore("Mexico", "Canada", 0, -1));
     }
+
+    @Test
+    public void testGetSummary_emptyScoreboard_returnsEmptyList() {
+        Scoreboard scoreboard = new Scoreboard();
+        List<MatchSummary> summary = scoreboard.getSummary();
+        assertEquals(0, summary.size());
+    }
+
+    @Test
+    public void testStartMatch_sameHomeAndAway_throwsException() {
+        Scoreboard scoreboard = new Scoreboard();
+        assertThrows(IllegalArgumentException.class, () -> scoreboard.startMatch("Mexico", "Mexico"));
+    }
+
+    @Test
+    public void testStartMatch_trimmedTeamNames_handledInChecks() {
+        Scoreboard scoreboard = new Scoreboard();
+        scoreboard.startMatch("Mexico", "Canada");
+        assertThrows(IllegalArgumentException.class, () -> scoreboard.startMatch(" Mexico ", "Brazil"));
+        assertThrows(IllegalArgumentException.class, () -> scoreboard.startMatch("Spain", " Canada "));
+    }
 }
